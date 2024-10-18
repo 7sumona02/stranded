@@ -1,101 +1,180 @@
-import Image from "next/image";
+'use client'
+import Link from "next/link"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Card, CardHeader, CardDescription, CardTitle, CardFooter } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
+import { useState } from "react"
+import { Progress } from "@/components/ui/progress"
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs"
+import { ModeToggle } from "@/components/ui/toggle-mode"
+import Dashboard from "@/components/Dashboard"
+import { ChevronDown, Package2Icon, SearchIcon } from "lucide-react"
+import DatePicker from "@/components/DatePicker"
 
-export default function Home() {
+interface CardData {
+  id: string;
+  title: string;
+  description: string;
+  progressValue: number;
+  imageSrc: string; // Added image source to the interface
+}
+
+const cards: CardData[] = [
+  { id: '1', title: 'Traveling', description: 'Education', progressValue: 33, imageSrc: '/t1.svg' },
+  { id: '2', title: 'Planning', description: 'Education', progressValue: 50, imageSrc: '/t2.svg' },
+  { id: '3', title: 'Meditation', description: 'Education', progressValue: 40, imageSrc: '/t3.svg' },
+  // Add more cards as needed
+];
+
+export default function Page() {
+  const [likedItems, setLikedItems] = useState<{ [key: string]: boolean }>({});
+
+  const handleLikeClick = (id: string) => {
+    setLikedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id], // Toggle the liked state for the specific card
+    }));
+  };
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className="grid min-h-screen w-full pl-5 overflow-hidden lg:grid-cols-[280px_1fr] bg-neutral-100 dark:bg-neutral-800 select-none">
+      <div className="py-5">
+      <Dashboard />
+      </div>
+      <div className="flex flex-col">
+        {/* <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+          <div className="flex md:justify-between md:items-end items-start">
+          <h1 className="text-3xl font-semibold max- w-[20vw]">Welcome back, Sumona! 👋</h1>
+          <Badge className="bg-white text-neutral-500 shadow-sm font-semibold ml-[42vw] md:ml-0">26, July 2024</Badge>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+      {cards.map((card) => (
+        <Card key={card.id} className="max-w-xs shadow-sm">
+          <img src={card.imageSrc} className="w-full h-44 object-cover rounded-t-xl" alt={card.title} />
+          <CardHeader className="pb-2 relative">
+            <div className="absolute top-9 right-5" onClick={() => handleLikeClick(card.id)}>
+              <FontAwesomeIcon 
+                icon={likedItems[card.id] ? solidHeart : regularHeart} 
+                className="text-[#1865F2] text-xl" 
+              />
+            </div>
+            <CardTitle className="text-xl">{card.title}</CardTitle>
+            <CardDescription>{card.description}</CardDescription>
+          </CardHeader>
+          <CardFooter className="pt-1">
+            <Progress value={card.progressValue} />
+          </CardFooter>
+        </Card>
+      ))}
     </div>
-  );
+        </main> */}
+        <div className="flex">
+          <div className="w-2/3 py-5">
+          <header className="flex h-14 lg:h-[60px] items-center gap-4 border-b dark:border-neutral-600 bg-muted/40 px-6">
+          <Link href="#" className="lg:hidden" prefetch={false}>
+            <Package2Icon className="h-6 w-6" />
+            <span className="sr-only">Home</span>
+          </Link>
+          <div className="flex-1">
+          <form className="ml-auto flex-1 sm:flex-initial">
+              <div className="relative">
+                <SearchIcon className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input type="search" placeholder="Search courses" className="border-none shadow-none bg-white rounded-full pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]" />
+              </div>
+            </form>
+          </div>
+          <div className="flex gap-4 md:ml-auto md:gap-2 lg:gap-2">
+            <ModeToggle />
+            
+          </div>
+          </header>
+          <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-6">
+              <div className="flex md:justify-between md:items-end items-start">
+              <h1 className="text-3xl font-semibold max- w-[20vw]">Welcome back, Sumona! 👋</h1>
+              <Badge className="bg-white text-neutral-500 shadow-sm font-semibold ml-[42vw] md:ml-0">26, July 2024</Badge>
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2">
+          {cards.map((card) => (
+            <Card key={card.id} className="max-w-xs shadow-sm">
+              <img src={card.imageSrc} className="w-full h-44 object-cover rounded-t-xl" alt={card.title} />
+              <CardHeader className="pb-2 relative">
+                <div className="absolute top-9 right-5" onClick={() => handleLikeClick(card.id)}>
+                  <FontAwesomeIcon 
+                    icon={likedItems[card.id] ? solidHeart : regularHeart} 
+                    className="text-[#1865F2] text-xl" 
+                  />
+                </div>
+                <CardTitle className="text-xl">{card.title}</CardTitle>
+                <CardDescription>{card.description}</CardDescription>
+              </CardHeader>
+              <CardFooter className="pt-1">
+                <Progress value={card.progressValue} />
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+            </main>
+          </div>
+          <div className="w-1/3 p-4 bg-white dark:bg-neutral-600/10">
+          <div className="flex justify-between items-center py-5">
+            <div className="text-sm">
+              <p className="font-semibold">Sumona</p>
+              <p className="text-muted-foreground">sumona8@gmail.com</p>
+            </div>
+            <div>
+            <SignedOut>
+              <Button><SignInButton>Login</SignInButton></Button></SignedOut>
+            <SignedIn>
+                <UserButton />
+            </SignedIn>
+            </div>
+          </div>
+
+          <div className="px-2 pt-5">
+          <div className="px-4 py-2 rounded-xl bg-[#1865F2]">
+            <div className="flex justify-center gap-6">
+              <div className="flex flex-col items-center">
+                <p className="font-semibold text-neutral-200">Age</p>
+                <p className="text-neutral-200">22</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="font-semibold text-neutral-200">Grade</p>
+                <p className="text-neutral-200">12th</p>
+              </div>
+              <div className="flex flex-col items-center">
+                <p className="font-semibold text-neutral-200">Country</p>
+                <p className="text-neutral-200">India</p>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <div className="flex justify-center pt-6">
+            <DatePicker />
+          </div>
+
+          <div className="flex flex-col justify-start pt-8 px-2">
+            <p className="font-semibold">Reminders</p>
+            <div className="flex flex-col gap-4 pt-4">
+              <div className="w-full py-2 text-white bg-[#1865F2] rounded-xl px-4 font-semibold">
+                Reminder 1
+              </div>
+              <div className="w-full py-2 text-white bg-[#1865F2] rounded-xl px-4 font-semibold">
+                Reminder 2
+              </div> 
+              <div className="w-full py-2 text-white bg-[#1865F2] rounded-xl px-4 font-semibold">
+                Reminder 3
+              </div>
+            </div>
+            <p className="pt-5 flex items-center justify-center gap-2 text-xs font-medium">Show All <ChevronDown className="w-4" /></p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
