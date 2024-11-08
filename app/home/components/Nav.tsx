@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Button from './Button';
 import {easeInOut, motion} from 'framer-motion'
+import LogInBtn from './LogInBtn';
 
 const Navbar = () => {
     return (
@@ -24,7 +25,7 @@ const Navbar = () => {
                     <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Landwind</span>
                 </a>
                 <div className="flex gap-4 items-center lg:order-2">
-                    <div><button className='px-4 py-2 border border-gray-600 rounded-2xl'>Log in</button></div>
+                    <div><LogInBtn /></div>
                     <Button />
                 </div>
                 <div className="items-center justify-between w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
@@ -33,7 +34,7 @@ const Navbar = () => {
                             <li key={index}>
                                 <a 
                                     href="#" 
-                                    className={`block ${item === 'Home' ? 'text-white' : 'text-white '} lg:bg-transparent lg:p-0 dark:text-white`}
+                                    className={`block ${item === 'Home' ? 'text-white' : 'text-white font-medium'} lg:bg-transparent lg:p-0 hover:text-yellow-400 transition-all font-medium`}
                                     aria-current={item === 'Home' ? 'page' : undefined}
                                 >
                                     {item}

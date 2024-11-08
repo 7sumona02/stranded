@@ -4,6 +4,7 @@ import { Users } from './Users'
 import BlockOne from './BlockBg'
 import { HeroText } from './HeroText'
 import {easeInOut, motion} from 'framer-motion'
+import LogInBtn from './LogInBtn'
 
 const Hero = () => {
   return (
@@ -26,7 +27,7 @@ const Hero = () => {
                 <h2 className='md:text-2xl text-xl md:text-right text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque iure, praesentium eum deserunt ut quae natus perspiciatis voluptates fuga numquam!</h2>
                 <div><div className='flex gap-4 text-xl'>
                 <div><Button /></div>
-                <div><button className='px-6 py-2 border border-gray-600 rounded-2xl'>Know more</button></div>
+                <div><LogInBtn /></div>
             </div></div>
             </div>
         </motion.div>
