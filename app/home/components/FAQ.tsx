@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, easeInOut, motion } from 'framer-motion';
 import { Plus } from 'lucide-react';
 
 const tabs = [
@@ -35,7 +35,11 @@ function FAQ() {
   };
 
   return (
-    <div className=''>
+    <motion.div
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, ease: easeInOut }}
+    className='md:px-0 px-10'>
       <div className='container mx-auto max-w-2xl pb-20 pt-2'>
         <div className='h-fit border border-gray-700/80 rounded-lg p-2 bg-white/3 px-10 py-12'>
           {tabs.map((tab, FAQ) => (
@@ -68,7 +72,7 @@ function FAQ() {
                       delay: 0.14,
                     }}
                   >
-                    <p className={`dark:text-gray-400 text-gray-700 p-3 xl:text-xl sm:text-sm text-xl pt-0 w-[90%]`}>
+                    <p className={`dark:text-gray-400 text-gray-700 p-3 xl:text-xl sm:text-sm text-xl md:text-left text-center pt-0 md:w-[90%] w-[100%]`}>
                       {tab.description}
                     </p>
                   </motion.div>
@@ -78,7 +82,7 @@ function FAQ() {
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

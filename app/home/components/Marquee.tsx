@@ -1,5 +1,7 @@
+'use client'
 import { cn } from '@/lib/utils';
 import Marquee from './core/marquee';
+import {easeInOut, motion} from 'framer-motion';
 
 const reviews = [
   {
@@ -79,7 +81,11 @@ const ReviewCard = ({
 
 const Marqueee = () => {
   return (
-    <div className='relative flex h-full w-full flex-col items-center justify-center overflow-hidden py-20 md:shadow-xl'>
+    <motion.div
+    initial={{ opacity: 0, y: 40, x: 80 }}
+      whileInView={{ opacity: 1, y: 0, x: 0 }}
+      transition={{ duration: 0.6, ease: easeInOut }}
+    className='relative flex h-full w-full flex-col items-center justify-center overflow-hidden py-20 md:shadow-xl'>
       <Marquee pauseOnHover className='[--duration:20s]'>
         {firstRow.map((review) => (
           <ReviewCard key={review.username} {...review} />
@@ -87,7 +93,7 @@ const Marqueee = () => {
       </Marquee>
       <div className='pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-white dark:from-background'></div>
       <div className='pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-white dark:from-background'></div>
-    </div>
+    </motion.div>
   );
 };
 

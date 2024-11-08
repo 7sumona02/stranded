@@ -1,14 +1,22 @@
-import React from "react";
+'use client'
 import { BentoGrid, BentoGridItem } from "./bento-grid";
 import { AlignRight, ArrowRight, Box, Copy, File, Signature, Table } from "lucide-react";
+import {easeInOut, motion} from 'framer-motion'
 
 export function Features() {
   return (
-    <div className="mb-24 px-24">
-    <div className='text-5xl font-bold max-w-lg mb-12'>
+    <div className="mb-24 md:px-24 px-10">
+    <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, ease: easeInOut }}
+    className='md:text-5xl text-3xl font-bold max-w-lg mb-12'>
     Design so good it will make you 
             <span className='text-yellow-400'> swipe right.</span>
-        </div>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, ease: easeInOut }}>
     <BentoGrid className="max-w-screen mx-auto">
       {items.map((item, i) => (
         <BentoGridItem
@@ -21,6 +29,7 @@ export function Features() {
         />
       ))}
     </BentoGrid>
+    </motion.div>
     </div>
   );
 }

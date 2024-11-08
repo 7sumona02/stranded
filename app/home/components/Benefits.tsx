@@ -1,5 +1,7 @@
+'use client'
 import { Blocks } from 'lucide-react';
 import React from 'react';
+import {easeInOut, motion} from 'framer-motion'
 
 // Define the type for the card data
 interface CardData {
@@ -24,13 +26,17 @@ const Benefits: React.FC = () => {
   ];
 
   return (
-    <div className='h-screen w-screen px-24 flex justify-center items-center'>
-      <div className='grid grid-cols-3 gap-20 bg-white/3 border border-t-gray-700/50 border-b-gray-900/50 border-x-gray-900/50 px-24 py-24 rounded-[5em]'>
+    <motion.div
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, ease: easeInOut }}
+    className='h-screen w-screen md:px-24 px-10 flex justify-center items-center md:mb-0 mb-[15em]'>
+      <div className='grid md:grid-cols-3 grid-cols-1 gap-20 bg-white/3 border border-t-gray-700/50 border-b-gray-900/50 border-x-gray-900/50 md:px-24 px-10 py-24 rounded-[5em]'>
         {cardData.map((data, index) => (
           <Card key={index} title={data.title} description={data.description} />
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

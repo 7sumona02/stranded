@@ -1,11 +1,18 @@
 // components/Navbar.js
+'use client'
 import Image from 'next/image';
 import Button from './Button';
+import {easeInOut, motion} from 'framer-motion'
 
 const Navbar = () => {
     return (
-        <nav className='sticky inset-x-0 top-0 z-30 w-full border-b border-gray-900/20 bg-white/3 backdrop-blur-xl transition-all'>
-            <div className="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto py-6">
+        <div
+        className='sticky inset-x-0 top-0 z-30 w-full border-b border-gray-900/20 bg-white/3 backdrop-blur-xl transition-all'>
+            <motion.div 
+            initial={{ y: -30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: easeInOut }}
+            className="flex flex-wrap items-center justify-between max-w-screen-xl px-4 mx-auto py-6">
                 <a href="#" className="flex items-center">
                     <Image 
                         src="https://www.svgrepo.com/show/499962/music.svg" 
@@ -35,8 +42,8 @@ const Navbar = () => {
                         ))}
                     </ul>
                 </div>
-            </div>
-        </nav>
+            </motion.div>
+        </div>
     );
 };
 

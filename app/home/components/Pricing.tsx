@@ -1,14 +1,22 @@
-import React from "react";
+'use client'
 import { BentoGrid, BentoGridItem } from "./bento-grid";
 import { Copy, File, Table } from "lucide-react";
+import {easeInOut, motion} from 'framer-motion'
 
 export function Pricing() {
   return (
-    <div className="px-24 mb-24">
-    <div className='text-5xl font-bold max-w-lg mb-12'>
+    <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, ease: easeInOut }}
+    className="md:px-24 px-10 mb-24">
+    <div className='md:text-5xl text-3xl font-bold max-w-lg mb-12'>
     Discover our pricing and
             <span className='text-yellow-400'> get started today.</span>
         </div>
+        <motion.div initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, ease: easeInOut }}>
     <BentoGrid className="max-w-screen mx-auto md:auto-rows-[20rem]">
       {items.map((item, i) => (
         <BentoGridItem
@@ -21,7 +29,9 @@ export function Pricing() {
         />
       ))}
     </BentoGrid>
-    </div>
+     </motion.div>
+    </motion.div>
+   
   );
 }
 const Skeleton = () => (

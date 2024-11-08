@@ -8,6 +8,7 @@ import {
   TabList,
   TabsProvider,
 } from './core/image-tabs';
+import { motion,easeInOut } from 'framer-motion';
 const tabs = [
   {
     title: 'How do UI components improve UX?',
@@ -36,15 +37,19 @@ const tabs = [
 ];
 function Steps() {
   return (
-    <div className='px-24 h-[60vh] mb-6'>
+    <motion.div
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, ease: easeInOut }}
+    className='md:px-24 px-10 md:h-[60vh] h-[80vh] mb-6'>
       <div className=' w-full  h-full'>
-      <div className='text-5xl font-bold max-w-xl translate-y-[3em] '>
+      <div className='md:text-5xl text-3xl font-bold max-w-xl translate-y-[3em] '>
       Your design journey in
             <span className='text-yellow-400'> three effortless steps.</span>
         </div>
         <TabsProvider
           defaultValue='improve'
-          className='md:grid md:grid-cols-12 items-center justify-center gap-20'
+          className='md:grid md:grid-cols-12 items-center justify-center gap-20 md:mt-0 mt-10'
         >
           <TabList className='md:col-span-5 translate-y-[5em]'>
             {tabs.map((tab, Steps) => (
@@ -66,7 +71,7 @@ function Steps() {
           </TabImageContainer>
         </TabsProvider>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

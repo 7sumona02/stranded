@@ -1,4 +1,4 @@
-export let timelineResourceData: Object[] = [
+export const timelineResourceData: object[] = [
     {
         Id: 61,
         Subject: 'Decoding',
